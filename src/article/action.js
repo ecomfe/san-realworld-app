@@ -6,7 +6,9 @@ import config from '../config';
 
 export const Types = {
     FETCH: 'articleFetch',
-    FETCH_FILL: 'articleFetchFill'
+    FETCH_FILL: 'articleFetchFill',
+    TAGS: 'articleTags',
+    TAGS_FILL: 'articleTagsFill'
 };
 
 store.addAction(Types.FETCH, function (payload, {dispatch}) {
@@ -33,6 +35,16 @@ store.addAction(Types.FETCH, function (payload, {dispatch}) {
     });
 });
 
-store.addAction(Types.FETCH_FILL, function (data) {console.log(data)
+store.addAction(Types.FETCH_FILL, function (data) {
     return updateBuilder().set('articles', data.articles);
+});
+
+store.addAction(Types.TAGS, function (payload, {dispatch}) {
+    return service.tags().then(response => {
+        dispatch(Types.TAGS_FILL, response.data);
+    });
+});
+
+store.addAction(Types.TAGS_FILL, function (data) {
+    return updateBuilder().set('tags', data.tags);
 });
