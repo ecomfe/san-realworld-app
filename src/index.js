@@ -1,13 +1,16 @@
 import Header from './components/header';
 import Footer from './components/footer';
-import {router} from 'san-router'
+import Login from './user/login';
+import ArticleList from './article/list';
+import {router} from 'san-router';
 
 function bootstrap() {
-    router.start()
-    
-    let mainEl = document.getElementById('main');
-    (new Header).attach(mainEl);
-    (new Footer).attach(mainEl);
+    (new Header).attach(document.getElementById('header'));
+    (new Footer).attach(document.getElementById('footer'));
+
+    router.add({rule: '/', Component: ArticleList});
+    router.add({rule: '/login', Component: Login});
+    router.start();
 }
 
 bootstrap();
