@@ -4,8 +4,14 @@ import { Types as ActionTypes } from './action';
 import ArticlePreview from './components/preview';
 
 export default  connect.san(
-    {articles: 'articles'},
-    {articles: ActionTypes.FETCH}
+    {
+        articles: 'articles', 
+        tags: 'tags'
+    },
+    {
+        articles: ActionTypes.FETCH,
+        tags: ActionTypes.TAGS
+    }
 )(san.defineComponent({
     components: {
         'x-preview': ArticlePreview
@@ -73,6 +79,7 @@ export default  connect.san(
 
     attached() {
         this.actions.articles({page: 0});
+        this.actions.tags();
     },
 
     changePage(page) {
