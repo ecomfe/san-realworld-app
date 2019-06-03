@@ -1,5 +1,6 @@
 import san from 'san';
 import { connect } from 'san-store';
+import { Link } from 'san-router';
 import { Types as ActionTypes } from './action';
 import ArticlePreview from './components/preview';
 
@@ -14,7 +15,8 @@ export default  connect.san(
     }
 )(san.defineComponent({
     components: {
-        'x-preview': ArticlePreview
+        'x-preview': ArticlePreview,
+        'x-link': Link
     },
 
     template: `
@@ -34,10 +36,13 @@ export default  connect.san(
               <div class="feed-toggle">
                 <ul class="nav nav-pills outline-active">
                   <li class="nav-item">
-                    <a class="nav-link disabled" href="">Your Feed</a>
+                    <x-link to="/my-feed" class="nav-link" active-class="active">Your Feed</x-link>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" href="">Global Feed</a>
+                    <x-link to="/" class="nav-link" active-class="active">Global Feed</x-link>
+                  </li>
+                  <li class="nav-item" s-if="tag">
+                    <x-link to="/tag/{{tag}}" class="nav-link" active-class="active"><i class="ion-pound"></i> {{ tag }}</x-link>
                   </li>
                 </ul>
               </div>
