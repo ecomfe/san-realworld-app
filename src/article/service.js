@@ -1,4 +1,4 @@
-import config from '../config';
+import config from '../common/config';
 import axios from 'axios';
 
 export default {

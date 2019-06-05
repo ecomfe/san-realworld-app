@@ -1,7 +1,7 @@
 import { store } from 'san-store';
 import { updateBuilder } from 'san-update';
 import service from './service';
-import config from '../config';
+import config from '../common/config';
 
 
 export const Types = {
