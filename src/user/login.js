@@ -1,7 +1,17 @@
 import san from 'san';
-import {Link} from 'san-router';
+import { Link, router } from 'san-router';
+import { connect } from 'san-store';
+import { Types } from './action';
 
-export default san.defineComponent({
+export default connect.san(
+    {
+        isAuthenticated: 'isAuthenticated',
+        user: 'user'
+    },
+    {
+        login: Types.LOGIN
+    }
+)(san.defineComponent({
     components: {
         'x-link': Link
     },
@@ -34,6 +44,13 @@ export default san.defineComponent({
     `,
 
     onSubmit() {
-      let {email, password} = this.data.get();
+        let {email, password} = this.data.get();
+        this.actions.login({email, password});
+    },
+
+    attached() {
+        this.watch('isAuthenticated', () => {
+            router.locator.redirect('/');
+        });
     }
-})
+}))
