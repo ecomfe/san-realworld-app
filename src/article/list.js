@@ -4,7 +4,7 @@ import { Link } from 'san-router';
 import { Types as ActionTypes } from './action';
 import ArticlePreview from './components/preview';
 
-export default  connect.san(
+export default connect.san(
     {
         articles: 'articles', 
         tags: 'tags'
