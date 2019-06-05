@@ -6,7 +6,8 @@ import { Types } from './action';
 export default connect.san(
     {
         isAuthenticated: 'isAuthenticated',
-        user: 'user'
+        user: 'user',
+        errors: 'errors'
     },
     {
         login: Types.LOGIN

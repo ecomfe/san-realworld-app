@@ -3,15 +3,26 @@ import Footer from './components/footer';
 import Login from './user/login';
 import Register from './user/register';
 import ArticleList from './article/list';
-import {router} from 'san-router';
+import { router } from 'san-router';
+import { store } from 'san-store';
+import { Types as ActionTypes } from './common/action';
+import axios from 'axios';
 
 function bootstrap() {
+    axios.defaults.validateStatus = function (status) {
+        return status >= 200 && status < 500;
+    };
+
     (new Header).attach(document.getElementById('header'));
     (new Footer).attach(document.getElementById('footer'));
 
     router.add({rule: '/', Component: ArticleList});
     router.add({rule: '/login', Component: Login});
     router.add({rule: '/register', Component: Register});
+
+    router.listen(() => {
+        store.dispatch(ActionTypes.ERRORS_CLEAR);
+    });
     router.start();
 }
 
