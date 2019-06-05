@@ -1,7 +1,13 @@
 import san from 'san';
-import {Link} from 'san-router';
+import { Link } from 'san-router';
+import { connect } from 'san-store';
 
-export default san.defineComponent({
+export default connect.san(
+    {
+        isAuthenticated: 'isAuthenticated',
+        user: 'user'
+    }
+)(san.defineComponent({
     components: {
         'x-link': Link
     },
@@ -11,7 +17,7 @@ export default san.defineComponent({
         <x-link to="/" class="navbar-brand">conduit</x-link>
 
         <!-- Show this for logged in users -->
-        <ul s-if="currentUser" class="nav navbar-nav pull-xs-right">
+        <ul s-if="user" class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
             <x-link to="/" class="nav-link" active-class="active">Home</x-link>
           </li>
@@ -25,9 +31,9 @@ export default san.defineComponent({
           </li>
 
           <li className="nav-item">
-            <x-link to="/{{currentUser.username}}" class="nav-link" active-class="active">
-              <img src="{{currentUser.image}}" className="user-pic" alt="{{currentUser.username}}">
-              {{currentUser.username}}
+            <x-link to="/{{user.username}}" class="nav-link" active-class="active">
+              <img src="{{user.image}}" className="user-pic" alt="{{user.username}}">
+              {{user.username}}
             </x-link>
           </li>
         </ul>
@@ -48,4 +54,4 @@ export default san.defineComponent({
         </ul>
       </div>
     `
-})
+}))
