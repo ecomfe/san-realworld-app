@@ -7,7 +7,8 @@ import ArticlePreview from './components/preview';
 export default connect.san(
     {
         articles: 'articles', 
-        tags: 'tags'
+        tags: 'tags',
+        isAuthenticated: 'isAuthenticated'
     },
     {
         articles: ActionTypes.FETCH,
@@ -35,7 +36,7 @@ export default connect.san(
             <div class="col-md-9">
               <div class="feed-toggle">
                 <ul class="nav nav-pills outline-active">
-                  <li class="nav-item">
+                  <li class="nav-item" s-if="isAuthenticated">
                     <x-link to="/my-feed" class="nav-link" active-class="active">Your Feed</x-link>
                   </li>
                   <li class="nav-item">
