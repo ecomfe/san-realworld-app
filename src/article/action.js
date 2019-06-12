@@ -35,8 +35,11 @@ store.addAction(Types.FETCH, function (payload, {dispatch}) {
     });
 });
 
-store.addAction(Types.FETCH_FILL, function (data) {
-    return updateBuilder().set('articles', data.articles);
+store.addAction(Types.FETCH_FILL, function ({articles, articlesCount}) {
+    return updateBuilder()
+        .set('articles', articles)
+        .set('articleCount', articlesCount)
+        .set('articlePageCount', Math.ceil(articlesCount / config.PAGE_SIZE));
 });
 
 store.addAction(Types.TAGS, function (payload, {dispatch}) {

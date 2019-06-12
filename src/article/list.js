@@ -7,6 +7,7 @@ import ArticlePreview from './components/preview';
 export default connect.san(
     {
         articles: 'articles', 
+        pageCount: 'articlePageCount',
         tags: 'tags',
         isAuthenticated: 'isAuthenticated'
     },
@@ -18,6 +19,23 @@ export default connect.san(
     components: {
         'x-preview': ArticlePreview,
         'x-link': Link
+    },
+
+    computed: {
+        pages() {
+            let pageCount = this.data.get('pageCount');
+
+            if (pageCount) {
+                let result = [];
+                for (let i = 0; i < pageCount; i++) {
+                    result.push(i);
+                }
+
+                return result;
+            }
+
+            return [0];
+        }
     },
 
     template: `
@@ -59,7 +77,7 @@ export default connect.san(
                   <li s-for="page in pages" on-click="changePage(page)"
                     class="page-item{{page === currentPage ? ' active' : ''}}"
                   >
-                    <a class="page-link">{{page}}</a>
+                    <a class="page-link">{{page + 1}}</a>
                   </li>
                 </ul>
               </nav>
