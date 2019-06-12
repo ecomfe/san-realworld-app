@@ -12,7 +12,7 @@ export const Types = {
     REGISTER: 'userRegister',
     SET_AUTH: 'userSetAuth',
     PURGE_AUTH: 'userPurgeAuth',
-    USER_UPDATE: 'userUpdate'
+    UPDATE: 'userUpdate'
 };
 
 store.addAction(Types.LOGIN, function (payload, {dispatch}) {
@@ -79,7 +79,7 @@ store.addAction(Types.PURGE_AUTH, function (user, {dispatch}) {
         .set('isAuthenticated', false);
 });
 
-store.addAction(Types.USER_UPDATE, function (payload, {dispatch}) {
+store.addAction(Types.UPDATE, function (payload, {dispatch}) {
     const { email, username, password, image, bio } = payload;
     const user = {
         email,

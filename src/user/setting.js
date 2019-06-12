@@ -11,7 +11,7 @@ export default connect.san(
     },
     {
         logout: Types.PURGE_AUTH,
-        updateUser: Types.USER_UPDATE
+        updateUser: Types.UPDATE
     }
 )(san.defineComponent({
     template: `
