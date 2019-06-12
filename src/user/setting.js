@@ -1,5 +1,5 @@
 import san from 'san';
-import { Link, router } from 'san-router';
+import { router } from 'san-router';
 import { connect } from 'san-store';
 import { Types } from './action';
 
