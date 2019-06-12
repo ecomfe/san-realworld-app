@@ -12,5 +12,9 @@ export default {
 
     update(user) {
         return axios.put(`${config.API_URL}/user`, user);
+    },
+
+    get() {
+        return axios.get(`${config.API_URL}/user`);
     }
 }
