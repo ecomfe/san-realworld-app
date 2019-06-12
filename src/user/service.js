@@ -8,5 +8,9 @@ export default {
 
     register(user) {
         return axios.post(`${config.API_URL}/users`, {user});
+    },
+
+    update(user) {
+        return axios.put(`${config.API_URL}/user`, user);
     }
 }
