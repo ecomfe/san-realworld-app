@@ -17,7 +17,7 @@ export default connect.san(
         <x-link to="/" class="navbar-brand">conduit</x-link>
 
         <!-- Show this for logged in users -->
-        <ul s-if="user" class="nav navbar-nav pull-xs-right">
+        <ul s-if="isAuthenticated" class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
             <x-link to="/" class="nav-link" active-class="active">Home</x-link>
           </li>
