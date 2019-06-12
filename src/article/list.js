@@ -101,12 +101,19 @@ export default connect.san(
       </div>
     `,
 
+    initData() {
+        return {
+            currentPage: 0
+        };
+    },
+
     attached() {
         this.actions.articles({page: 0});
         this.actions.tags();
     },
 
     changePage(page) {
+        this.data.set('currentPage', page);
         this.actions.articles({
             page
         });
