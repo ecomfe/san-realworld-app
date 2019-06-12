@@ -31,7 +31,7 @@ export default connect.san(
           </li>
 
           <li className="nav-item">
-            <x-link to="/{{user.username}}" class="nav-link" active-class="active">
+            <x-link to="/profile/{{user.username}}" class="nav-link" active-class="active">
               <img src="{{user.image}}" className="user-pic" alt="{{user.username}}">
               {{user.username}}
             </x-link>
