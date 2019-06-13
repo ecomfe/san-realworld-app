@@ -5,6 +5,7 @@ import Register from './user/register';
 import Setting from './user/setting';
 import ArticleList from './article/list';
 import ProfileArticles from './profile/articles';
+import ProfileFavorites from './profile/favorites';
 import { router } from 'san-router';
 import { store } from 'san-store';
 import { Types as ActionTypes } from './common/action';
@@ -32,6 +33,7 @@ function bootstrap() {
     router.add({rule: '/register', Component: Register});
     router.add({rule: '/settings', Component: Setting});
     router.add({rule: '/profile/:user', Component: ProfileArticles});
+    router.add({rule: '/profile/:user/favorites', Component: ProfileFavorites});
 
     
     router.start();
