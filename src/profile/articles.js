@@ -15,7 +15,9 @@ export default connect.san(
     },
     {
         articles: ArcitleActionTypes.FETCH,
-        fetch: ActionTypes.FETCH
+        fetch: ActionTypes.FETCH,
+        follow: ActionTypes.FOLLOW,
+        unfollow: ActionTypes.UNFOLLOW
     }
 )(san.defineComponent({
 
@@ -92,7 +94,7 @@ export default connect.san(
                   </div>
 
                   <nav s-if="!loading">
-                    <ul class="pagination">
+                    <ul class="pagination" s-if="pageCount > 1">
                       <li s-for="page in pages" on-click="changePage(page)"
                         class="page-item{{page === currentPage ? ' active' : ''}}"
                       >
@@ -115,17 +117,15 @@ export default connect.san(
             page: 0
         });
 
-        if (!this.data.get('profile')) {
-            this.actions.fetch(author);
-        }
+        this.actions.fetch(author);
     },
 
     unfollow() {
-
+        this.actions.unfollow(this.data.get('route.query.user'));
     },
 
     follow() {
-
+        this.actions.follow(this.data.get('route.query.user'));
     },
 
     changePage(page) {
