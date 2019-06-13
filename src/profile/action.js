@@ -6,10 +6,13 @@ import { Types as CommonActionTypes } from '../common/action';
 
 export const Types = {
     FETCH: 'profileFetch',
-    SET: 'profileSet'
+    SET: 'profileSet',
+    FOLLOW: 'profileFollow',
+    UNFOLLOW: 'profileUnfollow'
 };
 
 store.addAction(Types.FETCH, function (user, {dispatch}) {
+    dispatch(Types.SET, {});
     return service.get(user).then(
         ({data}) => {
             if (data.errors) {
@@ -25,4 +28,32 @@ store.addAction(Types.FETCH, function (user, {dispatch}) {
 
 store.addAction(Types.SET, function (profile, {dispatch}) {
     return updateBuilder().set('profile', profile);
+});
+
+store.addAction(Types.FOLLOW, function (user, {dispatch}) {
+    return service.follow(user).then(
+        ({data}) => {
+            if (data.errors) {
+                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
+            }
+            else {
+                dispatch(Types.SET, data.profile);
+            }
+            
+        }
+    );
+});
+
+store.addAction(Types.UNFOLLOW, function (user, {dispatch}) {
+    return service.follow(user).then(
+        ({data}) => {
+            if (data.errors) {
+                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
+            }
+            else {
+                dispatch(Types.SET, data.profile);
+            }
+            
+        }
+    );
 });
