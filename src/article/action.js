@@ -80,3 +80,11 @@ store.addAction(Types.GET, function (slug) {
 store.addAction(Types.SET, function (article) {
     return updateBuilder().set('article', article);
 });
+
+store.addAction(Types.ADD_TAG, function (tag) {
+    return updateBuilder().push('article.tagList', tag);
+});
+
+store.addAction(Types.REMOVE_TAG, function (tag) {
+    return updateBuilder().remove('article.tagList', tag);
+});
