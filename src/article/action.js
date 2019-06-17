@@ -11,6 +11,7 @@ export const Types = {
     TAGS_FILL: 'articleTagsFill',
     ADD: 'articleAdd',
     EDIT: 'articleEdit',
+    REMOVE: 'articleRemove',
     RESET: 'articleReset',
     SET: 'articleSet',
     GET: 'articleGet',
@@ -88,3 +89,17 @@ store.addAction(Types.ADD_TAG, function (tag) {
 store.addAction(Types.REMOVE_TAG, function (tag) {
     return updateBuilder().remove('article.tagList', tag);
 });
+
+store.addAction(Types.REMOVE, function (slug) {
+    return service.remove(slug);
+});
+
+store.addAction(Types.ADD, function (article) {
+    return service.add(article);
+});
+
+store.addAction(Types.EDIT, function (article) {
+    return service.udpate(article.slug, article);
+});
+
+
