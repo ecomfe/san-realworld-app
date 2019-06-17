@@ -24,5 +24,19 @@ export default {
 
     get(slug) {
         return axios.get(`${config.API_URL}/articles/${slug}`);
+    },
+
+    getComments(slug) {
+        return axios.get(`${config.API_URL}/articles/${slug}/comments`);
+    },
+
+    removeComment(slug, commentId) {
+        return axios.delete(`${config.API_URL}/articles/${slug}/comments/${commentId}`);
+    },
+
+    addComment(slug, comment) {
+        return axios.post(`${config.API_URL}/articles/${slug}/comments`, {
+            comment: { body: comment }
+        });
     }
 }
