@@ -4,6 +4,7 @@ import Login from './user/login';
 import Register from './user/register';
 import Setting from './user/setting';
 import ArticleList from './article/list';
+import ArticleEdit from './article/edit';
 import ProfileArticles from './profile/articles';
 import ProfileFavorites from './profile/favorites';
 import { router } from 'san-router';
@@ -34,6 +35,8 @@ function bootstrap() {
     router.add({rule: '/settings', Component: Setting});
     router.add({rule: '/profile/:user', Component: ProfileArticles});
     router.add({rule: '/profile/:user/favorites', Component: ProfileFavorites});
+    router.add({rule: '/editor', Component: ArticleEdit});
+    router.add({rule: '/editor/:slug', Component: ArticleEdit});
 
     
     router.start();
