@@ -8,7 +8,14 @@ export const Types = {
     FETCH: 'articleFetch',
     FETCH_FILL: 'articleFetchFill',
     TAGS: 'articleTags',
-    TAGS_FILL: 'articleTagsFill'
+    TAGS_FILL: 'articleTagsFill',
+    ADD: 'articleAdd',
+    EDIT: 'articleEdit',
+    RESET: 'articleReset',
+    SET: 'articleSet',
+    GET: 'articleGet',
+    ADD_TAG: 'articleAddTag',
+    REMOVE_TAG: 'articleRemoveTag'
 };
 
 store.addAction(Types.FETCH, function (payload, {dispatch}) {
@@ -50,4 +57,26 @@ store.addAction(Types.TAGS, function (payload, {dispatch}) {
 
 store.addAction(Types.TAGS_FILL, function (data) {
     return updateBuilder().set('tags', data.tags);
+});
+
+store.addAction(Types.RESET, function () {
+    return updateBuilder()
+        .set('article', {
+            author: {},
+            title: "",
+            description: "",
+            body: "",
+            tagList: []
+        })
+        .set('comments', []);
+});
+
+store.addAction(Types.GET, function (slug) {
+    return service.get(slug).then(({data}) => {
+        dispatch(Types.SET, data.article);
+    });
+});
+
+store.addAction(Types.SET, function (article) {
+    return updateBuilder().set('article', article);
 });
