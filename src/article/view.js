@@ -14,7 +14,8 @@ export default connect.san(
     },
     {
         get: ActionTypes.GET,
-        getComments: ActionTypes.GET_COMMENTS
+        getComments: ActionTypes.GET_COMMENTS,
+        removeComment: ActionTypes.REMOVE_COMMENT
     }
 )(san.defineComponent({
     components: {
@@ -80,7 +81,7 @@ export default connect.san(
                   </a>
                   <span class="date-posted">{{ comment.createdAt | date }}</span>
                   <span s-if="comment.author.username === user.username" class="mod-options">
-                    <i class="ion-trash-a" on-click="removeComment(slug, comment.id);"></i>
+                    <i class="ion-trash-a" on-click="removeComment(route.query.slug, comment.id);"></i>
                   </span>
                 </div>
               </div>
@@ -89,5 +90,9 @@ export default connect.san(
           </div>
         </div>
       </div>
-    `
+    `,
+
+    removeComment(slug, commentId) {
+        this.actions.removeComment({slug, commentId})
+    }
 }))

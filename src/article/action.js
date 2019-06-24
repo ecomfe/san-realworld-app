@@ -106,8 +106,11 @@ store.addAction(Types.EDIT, function (article) {
     return service.udpate(article.slug, article);
 });
 
-store.addAction(Types.ADD_COMMENT, function (payload) {
-    return service.addComment(payload.slug, payload.comment);
+store.addAction(Types.ADD_COMMENT, function (payload, {dispatch}) {
+    return service.addComment(payload.slug, payload.comment)
+        .then(() => {
+            dispatch(Types.GET_COMMENTS, payload.slug);
+        });
 });
 
 store.addAction(Types.GET_COMMENTS, function (slug, {dispatch}) {
