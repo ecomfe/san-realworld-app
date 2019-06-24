@@ -35,7 +35,7 @@ export default connect.san(
         let {slug, comment} = this.data.get();
 
         if (slug && comment) {
-            this.actions.submit(slug, comment);
+            this.actions.submit({slug, comment});
             this.data.set('comment', '');
         }
     }
