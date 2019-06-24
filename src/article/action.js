@@ -19,7 +19,8 @@ export const Types = {
     REMOVE_TAG: 'articleRemoveTag',
     ADD_COMMENT: 'articleAddComment',
     GET_COMMENTS: 'articleGetComments',
-    FILL_COMMENTS: 'articleFillComments'
+    FILL_COMMENTS: 'articleFillComments',
+    REMOVE_COMMENT: 'articleRemoveComment'
 };
 
 store.addAction(Types.FETCH, function (payload, {dispatch}) {
@@ -118,6 +119,13 @@ store.addAction(Types.GET_COMMENTS, function (slug, {dispatch}) {
 
 store.addAction(Types.FILL_COMMENTS, function (comments) {
     return updateBuilder().set('comments', comments);
+});
+
+store.addAction(Types.REMOVE_COMMENT, function (payload, {dispatch}) {
+    return service.removeComment(payload.slug, payload.commentId)
+        .then(() => {
+            dispatch(Types.GET_COMMENTS, payload.slug);
+        });
 });
 
 
