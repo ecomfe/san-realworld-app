@@ -73,7 +73,7 @@ store.addAction(Types.RESET, function () {
         .set('comments', []);
 });
 
-store.addAction(Types.GET, function (slug) {
+store.addAction(Types.GET, function (slug, {dispatch}) {
     return service.get(slug).then(({data}) => {
         dispatch(Types.SET, data.article);
     });
