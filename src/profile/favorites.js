@@ -115,9 +115,7 @@ export default connect.san(
             page: 0
         });
 
-        if (!this.data.get('profile')) {
-            this.actions.fetch(favorited);
-        }
+        this.actions.fetch(favorited);
     },
 
     unfollow() {
