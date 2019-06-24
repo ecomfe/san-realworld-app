@@ -16,7 +16,8 @@ export const Types = {
     SET: 'articleSet',
     GET: 'articleGet',
     ADD_TAG: 'articleAddTag',
-    REMOVE_TAG: 'articleRemoveTag'
+    REMOVE_TAG: 'articleRemoveTag',
+    ADD_COMMENT: 'articleAddComment'
 };
 
 store.addAction(Types.FETCH, function (payload, {dispatch}) {
@@ -100,6 +101,10 @@ store.addAction(Types.ADD, function (article) {
 
 store.addAction(Types.EDIT, function (article) {
     return service.udpate(article.slug, article);
+});
+
+store.addAction(Types.ADD_COMMENT, function (payload) {
+    return service.addComment(payload.slug, payload.comment);
 });
 
 
