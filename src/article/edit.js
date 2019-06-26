@@ -1,5 +1,5 @@
 import san from 'san';
-import { Link, router } from 'san-router';
+import { router } from 'san-router';
 import { connect } from 'san-store';
 import { Types as ActionTypes } from './action';
 
@@ -7,7 +7,8 @@ export default connect.san(
     {
         article: 'article',
         user: 'user',
-        isAuthenticated: 'isAuthenticated'
+        isAuthenticated: 'isAuthenticated',
+        errors: 'errors'
     },
     {
         add: ActionTypes.ADD,
@@ -69,14 +70,18 @@ export default connect.san(
     },
 
     onPublish() {
+        this.data.set('inProgress', true);
+
         let slug = this.data.get('route.query.slug');
+        this.actions[slug ? 'edit' : 'add'](this.data.get('article'))
+            .then(() => {
+                if (this.data.get('errors')) {
+                    this.data.set('inProgress', false);
+                    return;
+                }
 
-        if (slug) {
-
-        }
-        else {
-            
-        }
+                router.locator.redirect('/article/' + this.data.get('article.slug'));
+            });
     },
 
     addTag(e) {

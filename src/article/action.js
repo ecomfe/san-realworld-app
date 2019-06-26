@@ -2,6 +2,7 @@ import { store } from 'san-store';
 import { updateBuilder } from 'san-update';
 import service from './service';
 import config from '../common/config';
+import { Types as CommonActionTypes } from '../common/action';
 
 
 export const Types = {
@@ -98,12 +99,30 @@ store.addAction(Types.REMOVE, function (slug) {
     return service.remove(slug);
 });
 
-store.addAction(Types.ADD, function (article) {
-    return service.add(article);
+store.addAction(Types.ADD, function (article, {dispatch}) {
+    return service.add(article).then(
+        ({data}) => {
+            if (data.errors) {
+                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
+            }
+            else {
+                dispatch(Types.SET, data.article);
+            }
+        }
+    );
 });
 
-store.addAction(Types.EDIT, function (article) {
-    return service.update(article.slug, article);
+store.addAction(Types.EDIT, function (article, {dispatch}) {
+    return service.update(article.slug, article).then(
+        ({data}) => {
+            if (data.errors) {
+                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
+            }
+            else {
+                dispatch(Types.SET, data.article);
+            }
+        }
+    );
 });
 
 store.addAction(Types.ADD_COMMENT, function (payload, {dispatch}) {
