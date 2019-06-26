@@ -103,7 +103,7 @@ store.addAction(Types.ADD, function (article) {
 });
 
 store.addAction(Types.EDIT, function (article) {
-    return service.udpate(article.slug, article);
+    return service.update(article.slug, article);
 });
 
 store.addAction(Types.ADD_COMMENT, function (payload, {dispatch}) {
