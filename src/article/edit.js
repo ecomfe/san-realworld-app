@@ -26,7 +26,7 @@ export default connect.san(
                 <ul s-if="errors" class="error-messages">
                   <li s-for="v, k in errors">{{ k }} {{ v }}</li>
                 </ul>
-                <form>
+                <form onsubmit="return false;">
                   <fieldset disabled="{{inProgress}}">
                     <fieldset class="form-group">
                       <input type="text" class="form-control form-control-lg" value="{=article.title=}" placeholder="Article Title">
@@ -69,14 +69,29 @@ export default connect.san(
     },
 
     onPublish() {
+        let slug = this.data.get('route.query.slug');
 
+        if (slug) {
+
+        }
+        else {
+            
+        }
     },
 
     addTag(e) {
+        if ((e.which || e.keyCode) === 13) {
+            let tagInput = this.data.get('tagInput');
 
+            if (tagInput) {
+                this.actions.addTag(tagInput);
+            }
+
+            this.data.set('tagInput', '');
+        }
     },
 
-    removeTag() {
-      
+    removeTag(tag) {
+        this.actions.removeTag(tag);
     }
 }))
