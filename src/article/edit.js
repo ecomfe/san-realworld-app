@@ -12,7 +12,9 @@ export default connect.san(
     {
         add: ActionTypes.ADD,
         edit: ActionTypes.EDIT,
-        get: ActionTypes.GET
+        get: ActionTypes.GET,
+        addTag: ActionTypes.ADD_TAG,
+        removeTag: ActionTypes.REMOVE_TAG
     }
 )(san.defineComponent({
 
@@ -41,7 +43,7 @@ export default connect.san(
                     <fieldset class="form-group">
                       <input type="text" class="form-control" placeholder="Enter tags" value="{=tagInput=}" on-keyup="addTag($event)">
                       <div class="tag-list">
-                        <span class="tag-default tag-pill" s-for="tag, index of article.tagList">
+                        <span class="tag-default tag-pill" s-for="tag in article.tagList">
                           <i class="ion-close-round" on-click="removeTag(tag)"></i>
                           {{ tag }}
                         </span>
@@ -56,5 +58,25 @@ export default connect.san(
             </div>
           </div>
         </div>
-    `
+    `,
+
+    route() {
+        let slug = this.data.get('route.query.slug');
+
+        if (slug) {
+            this.actions.get(slug);
+        }
+    },
+
+    onPublish() {
+
+    },
+
+    addTag(e) {
+
+    },
+
+    removeTag() {
+      
+    }
 }))
