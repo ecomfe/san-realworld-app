@@ -2,12 +2,12 @@ import san from 'san';
 import { Link, router } from 'san-router';
 import { connect } from 'san-store';
 import { Types } from './action';
+import ErrorsView from '../common/components/errors';
 
 export default connect.san(
     {
         isAuthenticated: 'isAuthenticated',
-        user: 'user',
-        errors: 'errors'
+        user: 'user'
     },
     {
         login: Types.LOGIN
@@ -26,9 +26,7 @@ export default connect.san(
                 <p class="text-xs-center">
                   <x-link to="/register">Need an account?</x-link>
                 </p>
-                <ul s-if="errors" class="error-messages">
-                  <li s-for="v, k in errors">{{ k }} {{ v }}</li>
-                </ul>
+                <x-errors />
                 <form>
                   <fieldset class="form-group">
                     <input class="form-control form-control-lg" type="text" value="{=email=}" placeholder="Email">
