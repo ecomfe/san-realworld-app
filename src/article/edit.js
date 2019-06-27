@@ -2,6 +2,7 @@ import san from 'san';
 import { router } from 'san-router';
 import { connect } from 'san-store';
 import { Types as ActionTypes } from './action';
+import ErrorsView from '../common/components/errors';
 
 export default connect.san(
     {
@@ -18,15 +19,16 @@ export default connect.san(
         removeTag: ActionTypes.REMOVE_TAG
     }
 )(san.defineComponent({
-
+    components: {
+        'x-errors': ErrorsView
+    },
+    
     template: `
         <div class="editor-page">
           <div class="container page">
             <div class="row">
               <div class="col-md-10 offset-md-1 col-xs-12">
-                <ul s-if="errors" class="error-messages">
-                  <li s-for="v, k in errors">{{ k }} {{ v }}</li>
-                </ul>
+                <x-errors />
                 <form onsubmit="return false;">
                   <fieldset disabled="{{inProgress}}">
                     <fieldset class="form-group">
