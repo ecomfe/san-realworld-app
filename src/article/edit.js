@@ -82,7 +82,7 @@ export default connect.san(
                     return;
                 }
 
-                router.locator.redirect('/article/' + this.data.get('article.slug'));
+                router.locator.redirect(`/article/${data.article.slug}`);
             });
     },
 
