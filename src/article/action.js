@@ -21,7 +21,9 @@ export const Types = {
     ADD_COMMENT: 'articleAddComment',
     GET_COMMENTS: 'articleGetComments',
     FILL_COMMENTS: 'articleFillComments',
-    REMOVE_COMMENT: 'articleRemoveComment'
+    REMOVE_COMMENT: 'articleRemoveComment',
+    ADD_FAVORITE: 'articleAddFavorite',
+    REMOVE_FAVORITE: 'articleRemoveFavorite'
 };
 
 store.addAction(Types.FETCH, function (payload, {dispatch}) {
@@ -147,5 +149,22 @@ store.addAction(Types.REMOVE_COMMENT, function (payload, {dispatch}) {
             dispatch(Types.GET_COMMENTS, payload.slug);
         });
 });
+
+store.addAction(Types.ADD_FAVORITE, function (slug, {dispatch}) {
+    return service.addFavorite(slug).then(
+        ({data}) => {
+            dispatch(Types.SET, data.article);
+        }
+    );
+});
+
+store.addAction(Types.REMOVE_FAVORITE, function (slug, {dispatch}) {
+    return service.removeFavorite(slug).then(
+        ({data}) => {
+            dispatch(Types.SET, data.article);
+        }
+    );
+});
+
 
 
