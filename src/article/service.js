@@ -38,5 +38,13 @@ export default {
         return axios.post(`${config.API_URL}/articles/${slug}/comments`, {
             comment: { body: comment }
         });
+    },
+
+    addFavorite(slug) {
+        return axios.post(`${config.API_URL}/articles/${slug}/favorite`);
+    },
+
+    removeFavorite(slug) {
+        return axios.delete(`${config.API_URL}/articles/${slug}/favorite`);
     }
 }
