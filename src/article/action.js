@@ -105,9 +105,8 @@ store.addAction(Types.ADD, function (article, {dispatch}) {
             if (data.errors) {
                 dispatch(CommonActionTypes.ERRORS_SET, data.errors);
             }
-            else {
-                dispatch(Types.SET, data.article);
-            }
+
+            return data;
         }
     );
 });
@@ -118,9 +117,8 @@ store.addAction(Types.EDIT, function (article, {dispatch}) {
             if (data.errors) {
                 dispatch(CommonActionTypes.ERRORS_SET, data.errors);
             }
-            else {
-                dispatch(Types.SET, data.article);
-            }
+            
+            return data;
         }
     );
 });

@@ -22,7 +22,7 @@ export default connect.san(
     components: {
         'x-errors': ErrorsView
     },
-    
+
     template: `
         <div class="editor-page">
           <div class="container page">
@@ -76,8 +76,8 @@ export default connect.san(
 
         let slug = this.data.get('route.query.slug');
         this.actions[slug ? 'edit' : 'add'](this.data.get('article'))
-            .then(() => {
-                if (this.data.get('errors')) {
+            .then(data => {
+                if (data.errors) {
                     this.data.set('inProgress', false);
                     return;
                 }
