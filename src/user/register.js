@@ -48,11 +48,7 @@ export default connect.san(
 
     onSubmit() {
         let {username, email, password} = this.data.get();
-        this.actions.register({username, email, password});
-    },
-
-    attached() {
-        this.watch('isAuthenticated', () => {
+        this.actions.register({username, email, password}).then(() => {
             router.locator.redirect('/');
         });
     }
