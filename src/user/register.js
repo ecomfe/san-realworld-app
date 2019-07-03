@@ -28,7 +28,7 @@ export default connect.san(
                   <x-link to="/login">Have an account?</x-link>
                 </p>
                 <x-errors />
-                <form>
+                <form on-submit="onSubmit($event)">
                   <fieldset class="form-group">
                     <input class="form-control form-control-lg" type="text" value="{=username=}" placeholder="Username">
                   </fieldset>
@@ -38,7 +38,7 @@ export default connect.san(
                   <fieldset class="form-group">
                     <input class="form-control form-control-lg" type="password" value="{=password=}" placeholder="Password">
                   </fieldset>
-                  <button class="btn btn-lg btn-primary pull-xs-right" type="button" on-click="onSubmit">Sign up</button>
+                  <button class="btn btn-lg btn-primary pull-xs-right">Sign up</button>
                 </form>
               </div>
             </div>
@@ -46,10 +46,14 @@ export default connect.san(
         </div>
     `,
 
-    onSubmit() {
+    onSubmit(e) {
         let {username, email, password} = this.data.get();
-        this.actions.register({username, email, password}).then(() => {
-            router.locator.redirect('/');
+        this.actions.register({username, email, password}).then(data => {
+            if (data.user) {
+                router.locator.redirect('/');
+            }
         });
+
+        e.preventDefault();
     }
 }))

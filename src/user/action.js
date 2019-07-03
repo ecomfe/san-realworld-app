@@ -25,6 +25,7 @@ store.addAction(Types.LOGIN, function (payload, {dispatch}) {
                 dispatch(Types.SET_AUTH, data.user);
             }
             
+            return data;
         },
         ({data}) => {
             if (data.errors) {
@@ -69,6 +70,7 @@ store.addAction(Types.REGISTER, function (payload, {dispatch}) {
                 dispatch(Types.SET_AUTH, data.user);
             }
             
+            return data;
         }
     );
 });
