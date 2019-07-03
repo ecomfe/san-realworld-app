@@ -5,13 +5,8 @@ import { Types } from './action';
 import ErrorsView from '../common/components/errors';
 
 export default connect.san(
-    {
-        isAuthenticated: 'isAuthenticated',
-        user: 'user'
-    },
-    {
-        login: Types.LOGIN
-    }
+    {},
+    { login: Types.LOGIN }
 )(san.defineComponent({
     components: {
         'x-link': Link
@@ -27,14 +22,14 @@ export default connect.san(
                   <x-link to="/register">Need an account?</x-link>
                 </p>
                 <x-errors />
-                <form>
+                <form on-submit="onSubmit($event)">
                   <fieldset class="form-group">
                     <input class="form-control form-control-lg" type="text" value="{=email=}" placeholder="Email">
                   </fieldset>
                   <fieldset class="form-group">
                     <input class="form-control form-control-lg" type="password" value="{=password=}" placeholder="Password">
                   </fieldset>
-                  <button class="btn btn-lg btn-primary pull-xs-right" type="button" on-click="onSubmit">Sign in</button>
+                  <button class="btn btn-lg btn-primary pull-xs-right">Sign in</button>
                 </form>
               </div>
             </div>
@@ -42,10 +37,14 @@ export default connect.san(
         </div>
     `,
 
-    onSubmit() {
+    onSubmit(e) {
         let {email, password} = this.data.get();
-        this.actions.login({email, password}).then(() => {
-            router.locator.redirect('/');
+        this.actions.login({email, password}).then(data => {
+            if (data.user) {
+                router.locator.redirect('/');
+            }
         });
+
+        e.preventDefault();
     }
 }))
