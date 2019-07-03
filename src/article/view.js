@@ -3,6 +3,7 @@ import marked from "marked";
 import { connect } from 'san-store';
 import { Types as ActionTypes } from './action';
 import CommentEditor from './components/comment-editor';
+import ArticleMeta from './components/meta';
 
 
 export default connect.san(
@@ -19,6 +20,7 @@ export default connect.san(
     }
 )(san.defineComponent({
     components: {
+        'x-meta': ArticleMeta,
         'x-comment-editor': CommentEditor
     },
 
@@ -40,7 +42,7 @@ export default connect.san(
         <div class="banner">
           <div class="container">
             <h1>{{ article.title }}</h1>
-            <!--<RwvArticleMeta :article="article" :actions="true"></RwvArticleMeta>-->
+            <x-meta article="{{article}}" actions="{{true}}"/>
           </div>
         </div>
         <div class="container page">
@@ -56,7 +58,7 @@ export default connect.san(
           </div>
           <hr />
           <div class="article-actions">
-            <!--<RwvArticleMeta :article="article" :actions="true"></RwvArticleMeta>-->
+            <x-meta article="{{article}}" actions="{{true}}"/>
           </div>
           <div class="row">
             <div class="col-xs-12 col-md-8 offset-md-2">
