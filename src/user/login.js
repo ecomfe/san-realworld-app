@@ -1,5 +1,5 @@
 import san from 'san';
-import { Link, router } from 'san-router';
+import { router } from 'san-router';
 import { connect } from 'san-store';
 import { Types } from './action';
 import ErrorsView from '../common/components/errors';
@@ -8,10 +8,6 @@ export default connect.san(
     {},
     { login: Types.LOGIN }
 )(san.defineComponent({
-    components: {
-        'x-link': Link
-    },
-
     template: `
         <div class="auth-page">
           <div class="container page">
@@ -19,7 +15,7 @@ export default connect.san(
               <div class="col-md-6 offset-md-3 col-xs-12">
                 <h1 class="text-xs-center">Sign in</h1>
                 <p class="text-xs-center">
-                  <x-link to="/register">Need an account?</x-link>
+                  <a href="#/register">Need an account?</a>
                 </p>
                 <x-errors />
                 <form on-submit="onSubmit($event)">
