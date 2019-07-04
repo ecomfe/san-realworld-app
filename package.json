@@ -17,7 +17,7 @@
     "url": "https://github.com/ecomfe/san-realworld-app/issues"
   },
   "dependencies": {
-    "san": "^3.7.6",
+    "san": "^3.7.7",
     "san-router": "^1.2.1",
     "san-update": "2.1.0",
     "san-store": "^1.1.3",
