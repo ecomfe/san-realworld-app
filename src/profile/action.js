@@ -7,6 +7,7 @@ import { Types as CommonActionTypes } from '../common/action';
 export const Types = {
     FETCH: 'profileFetch',
     SET: 'profileSet',
+    RESET: 'profileReset',
     FOLLOW: 'profileFollow',
     UNFOLLOW: 'profileUnfollow'
 };
@@ -28,6 +29,10 @@ store.addAction(Types.FETCH, function (user, {dispatch}) {
 
 store.addAction(Types.SET, function (profile, {dispatch}) {
     return updateBuilder().set('profile', profile);
+});
+
+store.addAction(Types.RESET, function (profile, {dispatch}) {
+    return updateBuilder().set('profile', null);
 });
 
 store.addAction(Types.FOLLOW, function (user, {dispatch}) {

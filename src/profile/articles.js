@@ -16,6 +16,7 @@ export default connect.san(
     {
         articles: ArcitleActionTypes.FETCH,
         fetch: ActionTypes.FETCH,
+        reset: ActionTypes.RESET,
         follow: ActionTypes.FOLLOW,
         unfollow: ActionTypes.UNFOLLOW
     }
@@ -118,6 +119,10 @@ export default connect.san(
         });
 
         this.actions.fetch(author);
+    },
+
+    disposed() {
+        this.actions.reset();
     },
 
     unfollow() {
