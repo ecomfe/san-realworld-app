@@ -14,6 +14,7 @@ export default connect.san(
         user: 'user'
     },
     {
+        reset: ActionTypes.RESET,
         get: ActionTypes.GET,
         getComments: ActionTypes.GET_COMMENTS,
         removeComment: ActionTypes.REMOVE_COMMENT
@@ -34,6 +35,10 @@ export default connect.san(
         let slug = this.data.get('route.query.slug');
         this.actions.get(slug);
         this.actions.getComments(slug);
+    },
+
+    disposed() {
+        this.actions.reset();
     },
 
 

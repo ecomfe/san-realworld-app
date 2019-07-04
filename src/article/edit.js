@@ -12,6 +12,7 @@ export default connect.san(
         errors: 'errors'
     },
     {
+        reset: ActionTypes.RESET,
         add: ActionTypes.ADD,
         edit: ActionTypes.EDIT,
         get: ActionTypes.GET,
@@ -69,6 +70,10 @@ export default connect.san(
         if (slug) {
             this.actions.get(slug);
         }
+    },
+
+    disposed() {
+        this.actions.reset();
     },
 
     onPublish() {
