@@ -35,30 +35,36 @@ store.addAction(Types.RESET, function (profile, {dispatch}) {
     return updateBuilder().set('profile', null);
 });
 
-store.addAction(Types.FOLLOW, function (user, {dispatch}) {
+store.addAction(Types.FOLLOW, function (user, {dispatch, getState}) {
     return service.follow(user).then(
         ({data}) => {
             if (data.errors) {
                 dispatch(CommonActionTypes.ERRORS_SET, data.errors);
+                return;
             }
-            else {
+
+            if (getState('profile')) {
                 dispatch(Types.SET, data.profile);
             }
-            
+
+            return data;
         }
     );
 });
 
-store.addAction(Types.UNFOLLOW, function (user, {dispatch}) {
-    return service.follow(user).then(
+store.addAction(Types.UNFOLLOW, function (user, {dispatch, getState}) {
+    return service.unfollow(user).then(
         ({data}) => {
             if (data.errors) {
                 dispatch(CommonActionTypes.ERRORS_SET, data.errors);
+                return;
             }
-            else {
+
+            if (getState('profile')) {
                 dispatch(Types.SET, data.profile);
             }
-            
+
+            return data;
         }
     );
 });
