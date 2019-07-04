@@ -15,6 +15,7 @@ export const Types = {
     REMOVE: 'articleRemove',
     RESET: 'articleReset',
     SET: 'articleSet',
+    SET_AUTHOR: 'articleSetAuthor',
     GET: 'articleGet',
     ADD_TAG: 'articleAddTag',
     REMOVE_TAG: 'articleRemoveTag',
@@ -87,6 +88,10 @@ store.addAction(Types.GET, function (slug, {dispatch}) {
 
 store.addAction(Types.SET, function (article) {
     return updateBuilder().set('article', article);
+});
+
+store.addAction(Types.SET_AUTHOR, function (author) {
+    return updateBuilder().set('article.author', author);
 });
 
 store.addAction(Types.ADD_TAG, function (tag) {

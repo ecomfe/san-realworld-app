@@ -17,6 +17,7 @@ export default connect.san(
         removeArticle: ActionTypes.REMOVE,
         removeFav: ActionTypes.REMOVE_FAVORITE,
         addFav: ActionTypes.ADD_FAVORITE,
+        setAuthor: ActionTypes.SET_AUTHOR,
         unfollow: ProfileActionTypes.UNFOLLOW,
         follow: ProfileActionTypes.FOLLOW
     }
@@ -52,7 +53,7 @@ export default connect.san(
         <span s-elif="actions">
           <button class="btn btn-sm btn-outline-secondary" on-click="toggleFollow">
             <i class="ion-plus-round"></i> <span>&nbsp;</span>
-            <span>{{profile.following ? 'Unfollow' : 'Follow'}} {{article.author.username}}</span>
+            <span>{{article.author.following ? 'Unfollow' : 'Follow'}} {{article.author.username}}</span>
           </button>
           <span>&nbsp;&nbsp;</span>
           <button class="btn btn-sm {{article.favorited ? 'btn-primary' : 'btn-outline-primary'}}"
@@ -87,10 +88,12 @@ export default connect.san(
             return;
         }
 
-        let following = this.data.get('article.following');
-        this.actions[following ? 'unfollow' : 'follow']({
-            username: this.data.get('article.author')
-        });
+        let author = this.data.get('article.author');
+        this.actions[author.following ? 'unfollow' : 'follow'](author.username)
+            .then(data => {
+                this.actions.setAuthor(data.profile);
+                console.log(data.profile)
+            });
     },
 
     deleteArticle() {
