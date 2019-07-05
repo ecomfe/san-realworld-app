@@ -46,5 +46,5 @@ export default connect.san(
 
     follow() {
         this.actions.follow(this.data.get('profile.username'));
-    },
+    }
 }))
