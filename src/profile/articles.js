@@ -1,10 +1,10 @@
 import san from 'san';
-import { Link, router } from 'san-router';
 import { connect } from 'san-store';
 import { Types as ArcitleActionTypes } from '../article/action';
 import { Types as ActionTypes } from './action';
 import ArticlePreview from '../article/components/preview';
 import UserInfo from './components/user-info';
+import Nav from './components/nav';
 
 export default connect.san(
     {
@@ -25,8 +25,8 @@ export default connect.san(
 
     components: {
         'x-preview': ArticlePreview,
-        'x-link': Link,
-        'x-userinfo': UserInfo
+        'x-userinfo': UserInfo,
+        'x-nav': Nav
     },
 
     computed: {
@@ -53,16 +53,7 @@ export default connect.san(
           <div class="container">
             <div class="row">
               <div class="col-xs-12 col-md-10 offset-md-1">
-                <div class="articles-toggle">
-                  <ul class="nav nav-pills outline-active">
-                    <li class="nav-item">
-                      <x-link to="/profile/{{profile.username}}" class="nav-link" active-class="active">My Articles</x-link>
-                    </li>
-                    <li class="nav-item">
-                      <x-link to="/profile/{{profile.username}}/favorites" class="nav-link" active-class="active">Favorited Articles</x-link>
-                    </li>
-                  </ul>
-                </div>
+                <x-nav username="{{profile.username}}" />
 
                 <div class="profile-page">
                   <x-preview s-for="article in articles" article="{{article}}"/>
