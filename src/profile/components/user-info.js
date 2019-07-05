@@ -1,4 +1,5 @@
 import san from 'san';
+import { connect } from 'san-store';
 import { Types as ActionTypes } from '../action';
 
 
