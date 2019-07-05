@@ -18,25 +18,31 @@ export default connect.san(
     template: `
       <div>
         <x-errors />
-        <form class="card comment-form">
+        <form class="card comment-form" on-submit="postComment">
           <div class="card-block">
-            <textarea class="form-control" value="{=comment=}" placeholder="Write a comment..." rows="3">
+            <textarea class="form-control" value="{=comment=}" placeholder="Write a comment..." rows="3" disabled="{{inProgress}}">
             </textarea>
           </div>
           <div class="card-footer">
             <img src="{{userImage}}" class="comment-author-img" />
-            <button class="btn btn-sm btn-primary" on-click="postComment">Post Comment</button>
+            <button class="btn btn-sm btn-primary" disabled="{{inProgress}}">Post Comment</button>
           </div>
         </form>
       </div>
     `,
 
-    postComment() {
+    postComment(e) {
         let {slug, comment} = this.data.get();
 
         if (slug && comment) {
-            this.actions.submit({slug, comment});
-            this.data.set('comment', '');
+            this.data.set('inProgress', true);
+            this.actions.submit({slug, comment}).then(() => {
+                this.data.set('comment', '');
+                this.data.set('inProgress', false);
+            });
+            
         }
+
+        e.preventDefault();
     }
 }))
