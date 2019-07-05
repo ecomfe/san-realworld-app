@@ -1,28 +1,23 @@
 import san from 'san';
 import { connect } from 'san-store';
-import { Types as ArcitleActionTypes } from '../article/action';
 import { Types as ActionTypes } from './action';
-import ArticlePreview from '../article/components/preview';
 import UserInfo from './components/user-info';
 import Nav from './components/nav';
+import Articles from './components/articles';
 
 export default connect.san(
     {
-        articles: 'articles',
-        pageCount: 'articlePageCount',
         profile: 'profile',
-        user: 'user',
-        isAuthenticated: 'isAuthenticated'
+        user: 'user'
     },
     {
-        articles: ArcitleActionTypes.FETCH,
         fetch: ActionTypes.FETCH,
         reset: ActionTypes.RESET
     }
 )(san.defineComponent({
 
     components: {
-        'x-preview': ArticlePreview,
+        'x-articles': Articles,
         'x-userinfo': UserInfo,
         'x-nav': Nav
     },
@@ -51,25 +46,8 @@ export default connect.san(
           <div class="container">
             <div class="row">
               <div class="col-xs-12 col-md-10 offset-md-1">
-                <x-nav username="{{profile.username}}" />
-
-                <div class="profile-page">
-                  <x-preview s-for="article in articles" article="{{article}}"/>
-
-                  <div class="app-article-preview" s-if="!loading && articles.length === 0">
-                    No articles are here... yet.
-                  </div>
-
-                  <nav s-if="!loading">
-                    <ul class="pagination">
-                      <li s-for="page in pages" on-click="changePage(page)"
-                        class="page-item{{page === currentPage ? ' active' : ''}}"
-                      >
-                        <a class="page-link">{{page + 1}}</a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
+                <x-nav username="{{route.query.user}}" />
+                <x-articles favorited="{{route.query.user}}" />
               </div>
             </div>
           </div>
@@ -79,23 +57,10 @@ export default connect.san(
     route() {
         let favorited = this.data.get('route.query.user');
 
-        this.actions.articles({
-            favorited,
-            page: 0
-        });
-
         this.actions.fetch(favorited);
     },
 
     disposed() {
         this.actions.reset();
-    },
-
-    changePage(page) {
-        this.data.set('currentPage', page);
-        this.actions.articles({
-            favorited: this.data.get('route.query.user'),
-            page
-        });
     }
 }))
