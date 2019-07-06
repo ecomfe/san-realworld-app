@@ -8,7 +8,7 @@ export default connect.san(
 )(san.defineComponent({
     template: `
       <ul s-if="errors" class="error-messages">
-        <li s-for="v, k in errors">{{ k }} {{ v }}</li>
+        <li s-for="v in errors">{{ v }}</li>
       </ul>
     `
 }))
