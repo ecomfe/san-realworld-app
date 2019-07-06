@@ -8,6 +8,10 @@ export default connect.san(
     {},
     { login: Types.LOGIN }
 )(san.defineComponent({
+    components: {
+        'x-errors': ErrorsView
+    },
+    
     template: `
         <div class="auth-page">
           <div class="container page">
