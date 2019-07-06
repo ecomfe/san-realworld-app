@@ -26,16 +26,6 @@ store.addAction(Types.LOGIN, function (payload, {dispatch}) {
             }
             
             return data;
-        },
-        ({data}) => {
-            if (data.errors) {
-                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
-            }
-            else {
-                dispatch(Types.SET_AUTH, data.user);
-            }
-
-            return data;
         }
     );
 });
