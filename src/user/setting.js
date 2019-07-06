@@ -2,25 +2,30 @@ import san from 'san';
 import { router } from 'san-router';
 import { connect } from 'san-store';
 import { Types } from './action';
+import ErrorsView from '../common/components/errors';
 
 export default connect.san(
     {
         isAuthenticated: 'isAuthenticated',
-        user: 'user',
-        errors: 'errors'
+        user: 'user'
     },
     {
         logout: Types.PURGE_AUTH,
         updateUser: Types.UPDATE
     }
 )(san.defineComponent({
+    components: {
+        'x-errors': ErrorsView
+    },
+
     template: `
         <div class="settings-page">
           <div class="container page">
             <div class="row">
               <div class="col-md-6 offset-md-3 col-xs-12">
                 <h1 class="text-xs-center">Your Settings</h1>
-                <form>
+                <x-errors />
+                <form on-submit="updateSettings">
                   <fieldset>
                     <fieldset class="form-group">
                       <input class="form-control form-control-lg" type="text" value="{=user.image=}" placeholder="URL of profile picture">
@@ -37,7 +42,7 @@ export default connect.san(
                     <fieldset class="form-group">
                       <input class="form-control form-control-lg" type="password" value="{=user.password=}" placeholder="Password">
                     </fieldset>
-                    <button class="btn btn-lg btn-primary pull-xs-right" type="button" on-click="updateSettings">Update Settings</button>
+                    <button class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
                   </fieldset>
                 </form>
 
@@ -49,15 +54,13 @@ export default connect.san(
         </div>
     `,
 
-    updateSettings() {
+    updateSettings(e) {
         this.actions.updateUser(this.data.get('user'));
+        e.preventDefault();
     },
 
     logout() {
-        this.watch('isAuthenticated', () => {
-            router.locator.redirect('/');
-        });
-
         this.actions.logout();
+        router.locator.redirect('/');
     }
 }))
