@@ -16,6 +16,7 @@ export const Types = {
     RESET: 'articleReset',
     SET: 'articleSet',
     SET_AUTHOR: 'articleSetAuthor',
+    SET_LIST_ITEM: 'articleSetListItem',
     GET: 'articleGet',
     ADD_TAG: 'articleAddTag',
     REMOVE_TAG: 'articleRemoveTag',
@@ -159,6 +160,7 @@ store.addAction(Types.ADD_FAVORITE, function (slug, {dispatch}) {
     return service.addFavorite(slug).then(
         ({data}) => {
             dispatch(Types.SET, data.article);
+            dispatch(Types.SET_LIST_ITEM, data.article);
         }
     );
 });
@@ -167,9 +169,24 @@ store.addAction(Types.REMOVE_FAVORITE, function (slug, {dispatch}) {
     return service.removeFavorite(slug).then(
         ({data}) => {
             dispatch(Types.SET, data.article);
+            dispatch(Types.SET_LIST_ITEM, data.article);
         }
     );
 });
+
+store.addAction(Types.SET_LIST_ITEM, function (article, {getState}) {
+    let articles = getState('articles');
+
+    if (articles) {
+        for (let i = 0; i < articles.length; i++) {
+            if (articles[i].slug === article.slug) {
+                return updateBuilder().set('articles[' + i + ']', article);
+            }
+        }
+    }
+});
+
+
 
 
 
