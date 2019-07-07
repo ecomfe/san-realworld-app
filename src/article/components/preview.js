@@ -1,6 +1,5 @@
 import san from 'san';
 import ArticleMeta from './meta';
-import FavoriteButton from './favorite-button';
 
 
 
@@ -24,9 +23,5 @@ export default san.defineComponent({
           </ul>
         </a>
       </div>
-    `,
-
-    onToggleFavorite(e) {
-
-    }
+    `
 })
