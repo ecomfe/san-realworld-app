@@ -6,17 +6,12 @@ import FavoriteButton from './favorite-button';
 
 export default san.defineComponent({
     components: {
-        'x-meta': ArticleMeta,
-        'x-favbtn': FavoriteButton
+        'x-meta': ArticleMeta
     },
 
     template: `
       <div class="article-preview">
-        <x-meta article="{{article}}">
-          <x-favbtn article="{{article}}" on-toggle="onToggleFavorite($event)" class="pull-xs-right">
-            {{article.favoritesCount}}
-          </x-favbtn>
-        </x-meta>
+        <x-meta article="{{article}}" />
 
         <a href="#/article/{{article.slug}}" class="preview-link">
           <h1>{{ article.title }}</h1>
