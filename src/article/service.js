@@ -6,6 +6,10 @@ export default {
         return axios.get(`${config.API_URL}/articles`, {params});
     },
 
+    fetchFeed(params) {
+        return axios.get(`${config.API_URL}/articles/feed`, {params});
+    },
+
     tags() {
         return axios.get(`${config.API_URL}/tags`);
     },

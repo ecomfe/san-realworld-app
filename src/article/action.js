@@ -7,6 +7,7 @@ import { Types as CommonActionTypes } from '../common/action';
 
 export const Types = {
     FETCH: 'articleFetch',
+    FETCHING: 'articleFetching',
     FETCH_FILL: 'articleFetchFill',
     TAGS: 'articleTags',
     TAGS_FILL: 'articleTagsFill',
@@ -34,28 +35,39 @@ store.addAction(Types.FETCH, function (payload, {dispatch}) {
         offset: config.PAGE_SIZE * (payload.page || 0)
     };
 
-    if (payload.author) {
-        params.author = payload.author;
+    let fetch = service.fetch;
+    if (payload.feed) {
+        fetch = service.fetchFeed;
+    }
+    else {
+        if (payload.author) {
+            params.author = payload.author;
+        }
+
+        if (payload.tag) {
+            params.tag = payload.tag;
+        }
+
+        if (payload.favorited) {
+            params.favorited = payload.favorited;
+        }
     }
 
-    if (payload.tag) {
-        params.tag = payload.tag;
-    }
-
-    if (payload.favorited) {
-        params.favorited = payload.favorited;
-    }
-
-
-    return service.fetch(params).then(response => {
+    dispatch(Types.FETCHING);
+    return fetch(params).then(response => {
         dispatch(Types.FETCH_FILL, response.data);
     });
+});
+
+store.addAction(Types.FETCHING, function () {
+    return updateBuilder().set('articlesLoading', true);
 });
 
 store.addAction(Types.FETCH_FILL, function ({articles, articlesCount}) {
     return updateBuilder()
         .set('articles', articles)
         .set('articleCount', articlesCount)
+        .set('articlesLoading', false)
         .set('articlePageCount', Math.ceil(articlesCount / config.PAGE_SIZE));
 });
 
