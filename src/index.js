@@ -3,7 +3,7 @@ import Footer from './components/footer';
 import Login from './user/login';
 import Register from './user/register';
 import Setting from './user/setting';
-import ArticleList from './article/list';
+import Home from './article/home';
 import ArticleEdit from './article/edit';
 import ArticleView from './article/view';
 import ProfileMy from './profile/my';
@@ -30,7 +30,9 @@ function bootstrap() {
         store.dispatch(UserActionTypes.GET);
     });
 
-    router.add({rule: '/', Component: ArticleList});
+    router.add({rule: '/', Component: Home});
+    router.add({rule: '/tag/:tag', Component: Home});
+    router.add({rule: '/my-feed', Component: Home});
     router.add({rule: '/login', Component: Login});
     router.add({rule: '/register', Component: Register});
     router.add({rule: '/settings', Component: Setting});

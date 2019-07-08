@@ -2,40 +2,20 @@ import san from 'san';
 import { connect } from 'san-store';
 import { Link } from 'san-router';
 import { Types as ActionTypes } from './action';
-import ArticlePreview from './components/preview';
+import ArticleList from './components/list';
 
 export default connect.san(
     {
-        articles: 'articles', 
-        pageCount: 'articlePageCount',
         tags: 'tags',
         isAuthenticated: 'isAuthenticated'
     },
     {
-        articles: ActionTypes.FETCH,
         tags: ActionTypes.TAGS
     }
 )(san.defineComponent({
     components: {
-        'x-preview': ArticlePreview,
+        'x-list': ArticleList,
         'x-link': Link
-    },
-
-    computed: {
-        pages() {
-            let pageCount = this.data.get('pageCount');
-
-            if (pageCount) {
-                let result = [];
-                for (let i = 0; i < pageCount; i++) {
-                    result.push(i);
-                }
-
-                return result;
-            }
-
-            return [0];
-        }
     },
 
     template: `
@@ -60,28 +40,13 @@ export default connect.san(
                   <li class="nav-item">
                     <x-link to="/" class="nav-link" active-class="active">Global Feed</x-link>
                   </li>
-                  <li class="nav-item" s-if="tag">
-                    <x-link to="/tag/{{tag}}" class="nav-link" active-class="active"><i class="ion-pound"></i> {{ tag }}</x-link>
+                  <li class="nav-item" s-if="route.query.tag">
+                    <x-link to="/tag/{{route.query.tag}}" class="nav-link" active-class="active"><i class="ion-pound"></i> {{route.query.tag}}</x-link>
                   </li>
                 </ul>
               </div>
 
-              <x-preview s-for="article in articles" article="{{article}}"/>
-
-              <div class="app-article-preview" s-if="!loading && articles.length === 0">
-                No articles are here... yet.
-              </div>
-
-              <nav s-if="!loading">
-                <ul class="pagination">
-                  <li s-for="page in pages" on-click="changePage(page)"
-                    class="page-item{{page === currentPage ? ' active' : ''}}"
-                  >
-                    <a class="page-link">{{page + 1}}</a>
-                  </li>
-                </ul>
-              </nav>
-
+              <x-list feed="{{route.path === '/my-feed'}}" tag="{{route.query.tag}}" />
             </div>
 
 
@@ -101,21 +66,7 @@ export default connect.san(
       </div>
     `,
 
-    initData() {
-        return {
-            currentPage: 0
-        };
-    },
-
     attached() {
-        this.actions.articles({page: 0});
         this.actions.tags();
-    },
-
-    changePage(page) {
-        this.data.set('currentPage', page);
-        this.actions.articles({
-            page
-        });
     }
 }))
