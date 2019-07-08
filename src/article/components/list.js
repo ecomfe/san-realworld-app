@@ -30,10 +30,10 @@ export default connect.san(
 
         <nav s-if="!loading">
           <ul class="pagination">
-            <li s-for="page in pages" on-click="changePage(page)"
+            <li s-for="page in pages" on-click="changePage($event, page)"
               class="page-item{{page === currentPage ? ' active' : ''}}"
             >
-              <a class="page-link">{{page + 1}}</a>
+              <a class="page-link" href="">{{page + 1}}</a>
             </li>
           </ul>
         </nav>
@@ -65,10 +65,10 @@ export default connect.san(
         this.watch('feed', this.change);
         this.watch('tag', this.change);
 
-        this.changePage(0);
+        this.fetch(0);
     },
 
-    changePage(page) {
+    fetch(page) {
         let {favorited, author, tag, feed} = this.data.get();
         this.data.set('currentPage', page);
 
@@ -81,10 +81,15 @@ export default connect.san(
         });
     },
 
+    changePage(e, page) {
+        e.preventDefault();
+        this.fetch(page);
+    },
+
     updated() {
         if (this.updateFromOwner) {
             this.updateFromOwner = false;
-            this.changePage(0);
+            this.fetch(0);
         }
     }
 }))
