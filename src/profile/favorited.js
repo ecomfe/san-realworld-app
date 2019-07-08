@@ -3,7 +3,7 @@ import { connect } from 'san-store';
 import { Types as ActionTypes } from './action';
 import UserInfo from './components/user-info';
 import Nav from './components/nav';
-import Articles from './components/articles';
+import ArticleList from '../article/components/list';
 
 export default connect.san(
     {
@@ -17,7 +17,7 @@ export default connect.san(
 )(san.defineComponent({
 
     components: {
-        'x-articles': Articles,
+        'x-articles': ArticleList,
         'x-userinfo': UserInfo,
         'x-nav': Nav
     },
