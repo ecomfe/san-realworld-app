@@ -28,7 +28,7 @@ export default connect.san(
           No articles are here... yet.
         </div>
 
-        <nav s-if="!loading">
+        <nav s-if="!loading && pageCount - 1">
           <ul class="pagination">
             <li s-for="page in pages" on-click="changePage($event, page)"
               class="page-item{{page === currentPage ? ' active' : ''}}"
