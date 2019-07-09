@@ -26,7 +26,7 @@ export default connect.san(
                 <h1 class="text-xs-center">Your Settings</h1>
                 <x-errors />
                 <form on-submit="updateSettings">
-                  <fieldset>
+                  <fieldset disabled="{{inProgress}}">
                     <fieldset class="form-group">
                       <input class="form-control form-control-lg" type="text" value="{=user.image=}" placeholder="URL of profile picture">
                     </fieldset>
@@ -42,7 +42,7 @@ export default connect.san(
                     <fieldset class="form-group">
                       <input class="form-control form-control-lg" type="password" value="{=user.password=}" placeholder="Password">
                     </fieldset>
-                    <button class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
+                    <button class="btn btn-lg btn-primary pull-xs-right" disabled="{{inProgress}}">Update Settings</button>
                   </fieldset>
                 </form>
 
@@ -55,8 +55,12 @@ export default connect.san(
     `,
 
     updateSettings(e) {
-        this.actions.updateUser(this.data.get('user'));
         e.preventDefault();
+
+        this.data.set('inProgress', true);
+        this.actions.updateUser(this.data.get('user')).then(() => {
+            this.data.set('inProgress', null);
+        });
     },
 
     logout() {
