@@ -1,5 +1,5 @@
-import Header from './components/header';
-import Footer from './components/footer';
+import Header from './common/components/header';
+import Footer from './common/components/footer';
 import Login from './user/login';
 import Register from './user/register';
 import Setting from './user/setting';
