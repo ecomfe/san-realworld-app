@@ -1,6 +1,6 @@
 import san from 'san';
 import { connect } from 'san-store';
-import ArticlePreview from './preview';
+import ArticleMeta from './meta';
 import { Types as ActionTypes } from '../action';
 
 
@@ -16,13 +16,26 @@ export default connect.san(
     }
 )(san.defineComponent({
     components: {
-        'x-preview': ArticlePreview
+        'x-meta': ArticleMeta
     },
 
     template: `
       <div>
         <div s-if="loading" class="article-preview">Loading articles...</div>
-        <x-preview s-else s-for="article in articles" article="{{article}}" />
+        <div s-else s-for="article in articles" class="article-preview">
+          <x-meta article="{{article}}" />
+
+          <a href="#/article/{{article.slug}}" class="preview-link">
+            <h1>{{ article.title }}</h1>
+            <p>{{ article.description }}</p>
+            <span>Read more...</span>
+            <ul class="tag-list">
+              <li class="tag-default tag-pill tag-outline" s-for="tag in article.tagList">
+                {{ tag }}
+              </li>
+            </ul>
+          </a>
+        </div>
 
         <div class="article-preview" s-if="!loading && articles.length === 0">
           No articles are here... yet.
