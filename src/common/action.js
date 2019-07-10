@@ -26,7 +26,7 @@ export function whenNoError(fn) {
         if (data.errors) {
             store.dispatch(Types.ERRORS_SET, data.errors);
         }
-        else {
+        else if (typeof fn === 'function'){
             fn(data);
         }
             
