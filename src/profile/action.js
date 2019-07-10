@@ -1,7 +1,7 @@
 import { store } from 'san-store';
 import { updateBuilder } from 'san-update';
 import service from './service';
-import { Types as CommonActionTypes } from '../common/action';
+import { whenNoError } from '../common/action';
 
 
 export const Types = {
@@ -15,15 +15,9 @@ export const Types = {
 store.addAction(Types.FETCH, function (user, {dispatch}) {
     dispatch(Types.SET, {});
     return service.get(user).then(
-        ({data}) => {
-            if (data.errors) {
-                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
-            }
-            else {
-                dispatch(Types.SET, data.profile);
-            }
-            
-        }
+        whenNoError(data => {
+            dispatch(Types.SET, data.profile);
+        })
     );
 });
 
@@ -37,34 +31,20 @@ store.addAction(Types.RESET, function (profile, {dispatch}) {
 
 store.addAction(Types.FOLLOW, function (user, {dispatch, getState}) {
     return service.follow(user).then(
-        ({data}) => {
-            if (data.errors) {
-                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
-                return;
-            }
-
+        whenNoError(data => {
             if (getState('profile')) {
                 dispatch(Types.SET, data.profile);
             }
-
-            return data;
-        }
+        })
     );
 });
 
 store.addAction(Types.UNFOLLOW, function (user, {dispatch, getState}) {
     return service.unfollow(user).then(
-        ({data}) => {
-            if (data.errors) {
-                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
-                return;
-            }
-
+        whenNoError(data => {
             if (getState('profile')) {
                 dispatch(Types.SET, data.profile);
             }
-
-            return data;
-        }
+        })
     );
 });

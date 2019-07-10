@@ -3,7 +3,7 @@ import { updateBuilder } from 'san-update';
 import axios from 'axios';
 import service from './service';
 import jwt from '../common/jwt';
-import { Types as CommonActionTypes } from '../common/action';
+import { whenNoError } from '../common/action';
 
 
 export const Types = {
@@ -17,16 +17,9 @@ export const Types = {
 
 store.addAction(Types.LOGIN, function (payload, {dispatch}) {
     return service.login(payload).then(
-        ({data}) => {
-            if (data.errors) {
-                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
-            }
-            else {
-                dispatch(Types.SET_AUTH, data.user);
-            }
-            
-            return data;
-        }
+        whenNoError(data => {
+            dispatch(Types.SET_AUTH, data.user);
+        })
     );
 });
 
@@ -39,29 +32,19 @@ store.addAction(Types.GET, function (payload, {getState, dispatch}) {
     let token = jwt.getToken();
     if (token) {
         setRequestHeaderToken(token);
-        return service.get().then(({data}) => {
-            if (data.errors) {
-                store.dispatch(CommonActionTypes.ERRORS_SET, data.errors);
-            }
-            else {
-                store.dispatch(Types.SET_AUTH, data.user);
-            }
-        });
+        return service.get().then(
+            whenNoError(data => {
+                dispatch(Types.SET_AUTH, data.user);
+            })
+        );
     }
 });
 
 store.addAction(Types.REGISTER, function (payload, {dispatch}) {
     return service.register(payload).then(
-        ({data}) => {
-            if (data.errors) {
-                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
-            }
-            else {
-                dispatch(Types.SET_AUTH, data.user);
-            }
-            
-            return data;
-        }
+        whenNoError(data => {
+            dispatch(Types.SET_AUTH, data.user);
+        })
     );
 });
 
@@ -95,15 +78,9 @@ store.addAction(Types.UPDATE, function (payload, {dispatch}) {
     }
 
     return service.update(user).then(
-        ({data}) => {
-            if (data.errors) {
-                dispatch(CommonActionTypes.ERRORS_SET, data.errors);
-            }
-            else {
-                dispatch(Types.SET_AUTH, data.user);
-            }
-            
-        }
+        whenNoError(data => {
+            dispatch(Types.SET_AUTH, data.user);
+        })
     );
 });
 
