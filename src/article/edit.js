@@ -68,6 +68,9 @@ export default connect.san(
         if (slug) {
             this.actions.get(slug);
         }
+        else {
+            this.actions.reset();
+        }
     },
 
     disposed() {
