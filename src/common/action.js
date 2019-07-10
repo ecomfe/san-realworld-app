@@ -20,3 +20,16 @@ store.addAction(Types.ERRORS_SET, function (errors) {
 
     return updateBuilder().set('errors', formattedErrors);
 });
+
+export function whenNoError(fn) {
+    return function ({data}) {
+        if (data.errors) {
+            store.dispatch(Types.ERRORS_SET, data.errors);
+        }
+        else {
+            fn(data);
+        }
+            
+        return data;
+    };
+}
