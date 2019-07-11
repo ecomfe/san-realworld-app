@@ -13,13 +13,29 @@ We've gone to great lengths to adhere to the **San** community styleguides & bes
 For more information on how to this works with other frontends/backends, head over to the [RealWorld](https://github.com/gothinkster/realworld) repo.
 
 
-# How it works
 
-> Describe the general architecture of your app here
 
 # Getting started
 
-> npm install, npm start, etc.
+You can view a live demo over at https://ecomfe.github.io/san-realworld-app/
+
+To get the frontend running locally:
+
+- Clone this repo
+- `npm install` to install all req'd dependencies
+- `npm start` to start the local server
+
+Before contributing please read the following:
+
+1. [RealWorld guidelines](https://github.com/gothinkster/realworld/tree/master/spec) for implementing a new framework,
+2. [RealWorld frontend instructions](https://github.com/gothinkster/realworld-starter-kit/blob/master/FRONTEND_INSTRUCTIONS.md)
+3. [Realworld API endpoints](https://github.com/gothinkster/realworld/tree/master/api)
+
+
+Building the project:
+
+```bash
+```
 
 ## Functionality overview
 
