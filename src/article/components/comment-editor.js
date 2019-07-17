@@ -24,7 +24,7 @@ export default connect.san(
             </textarea>
           </div>
           <div class="card-footer">
-            <img src="{{userImage}}" class="comment-author-img" />
+            <img src="{{userImage}}" class="comment-author-img" s-if="userImage">
             <button class="btn btn-sm btn-primary" disabled="{{inProgress}}">Post Comment</button>
           </div>
         </form>

@@ -32,7 +32,7 @@ export default connect.san(
 
           <li className="nav-item">
             <x-link to="/profile/{{user.username}}" class="nav-link" active-class="active">
-              <img src="{{user.image}}" className="user-pic" alt="{{user.username}}">
+              <img src="{{user.image}}" className="user-pic" alt="{{user.username}}" s-if="user.image">
               {{user.username}}
             </x-link>
           </li>
