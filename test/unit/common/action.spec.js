@@ -1,5 +1,5 @@
 import { store } from 'san-store';
-import {Types} from '../../../src/common/action';
+import { Types } from '../../../src/common/action';
 
 describe('Common Action', () => {
   it('set errors and clear errors', () => {
