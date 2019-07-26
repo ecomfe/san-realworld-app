@@ -29,7 +29,7 @@ export const Types = {
     REMOVE_FAVORITE: 'articleRemoveFavorite'
 };
 
-store.addAction(Types.FETCH, function (payload, {dispatch}) {
+store.addAction(Types.FETCH, function (payload = {}, {dispatch}) {
     let params = {
         limit: config.PAGE_SIZE,
         offset: config.PAGE_SIZE * (payload.page || 0)
