@@ -1,5 +1,8 @@
 # ![San Example App](logo.png)
 
+[![RealWorld Frontend](https://img.shields.io/badge/realworld-frontend-%23783578.svg)](http://realworld.io)
+[![Build Status](https://travis-ci.com/ecomfe/san-realworld-app.svg?branch=master)](https://travis-ci.com/ecomfe/san-realworld-app)
+
 > ### San codebase containing real world examples (CRUD, auth, advanced patterns, etc) that adheres to the [RealWorld](https://github.com/gothinkster/realworld) spec and API.
 
 
