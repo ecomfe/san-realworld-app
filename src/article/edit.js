@@ -28,7 +28,7 @@ export default connect.san(
             <div class="row">
               <div class="col-md-10 offset-md-1 col-xs-12">
                 <x-errors />
-                <form on-submit="onPublish">
+                <form on-submit="prevent:onPublish">
                   <fieldset disabled="{{inProgress}}">
                     <fieldset class="form-group">
                       <input type="text" class="form-control form-control-lg" value="{=article.title=}" placeholder="Article Title">
@@ -77,8 +77,7 @@ export default connect.san(
         this.actions.reset();
     },
 
-    onPublish(e) {
-        e.preventDefault();
+    onPublish() {
         this.data.set('inProgress', true);
 
         let slug = this.data.get('route.query.slug');

@@ -25,7 +25,7 @@ export default connect.san(
               <div class="col-md-6 offset-md-3 col-xs-12">
                 <h1 class="text-xs-center">Your Settings</h1>
                 <x-errors />
-                <form on-submit="updateSettings">
+                <form on-submit="prevent:updateSettings">
                   <fieldset disabled="{{inProgress}}">
                     <fieldset class="form-group">
                       <input class="form-control form-control-lg" type="text" value="{=user.image=}" placeholder="URL of profile picture">
@@ -55,8 +55,6 @@ export default connect.san(
     `,
 
     updateSettings(e) {
-        e.preventDefault();
-
         this.data.set('inProgress', true);
         this.actions.updateUser(this.data.get('user')).then(() => {
             this.data.set('inProgress', null);

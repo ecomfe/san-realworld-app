@@ -43,7 +43,7 @@ export default connect.san(
 
         <nav s-if="!loading && pageCount > 1">
           <ul class="pagination">
-            <li s-for="page in pages" on-click="changePage($event, page)"
+            <li s-for="page in pages" on-click="prevent:changePage(page)"
               class="page-item{{page === currentPage ? ' active' : ''}}"
             >
               <a class="page-link" href="">{{page + 1}}</a>
@@ -94,8 +94,7 @@ export default connect.san(
         });
     },
 
-    changePage(e, page) {
-        e.preventDefault();
+    changePage(page) {
         this.fetch(page);
     },
 

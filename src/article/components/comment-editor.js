@@ -5,8 +5,7 @@ import ErrorsView from '../../common/components/errors';
 
 
 export default connect.san(
-    {
-    },
+    {},
     {
         submit: ActionTypes.ADD_COMMENT
     }
@@ -18,7 +17,7 @@ export default connect.san(
     template: `
       <div>
         <x-errors />
-        <form class="card comment-form" on-submit="postComment">
+        <form class="card comment-form" on-submit="prevent:postComment">
           <div class="card-block">
             <textarea class="form-control" value="{=comment=}" placeholder="Write a comment..." rows="3" disabled="{{inProgress}}">
             </textarea>
@@ -31,7 +30,7 @@ export default connect.san(
       </div>
     `,
 
-    postComment(e) {
+    postComment() {
         let {slug, comment} = this.data.get();
 
         if (slug && comment) {
@@ -42,7 +41,5 @@ export default connect.san(
             });
             
         }
-
-        e.preventDefault();
     }
 }))

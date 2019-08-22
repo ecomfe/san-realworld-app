@@ -22,7 +22,7 @@ export default connect.san(
                   <a href="#/register">Need an account?</a>
                 </p>
                 <x-errors />
-                <form on-submit="onSubmit($event)">
+                <form on-submit="prevent:onSubmit">
                   <fieldset class="form-group">
                     <input class="form-control form-control-lg" type="text" value="{=email=}" placeholder="Email">
                   </fieldset>
@@ -37,14 +37,12 @@ export default connect.san(
         </div>
     `,
 
-    onSubmit(e) {
+    onSubmit() {
         let {email, password} = this.data.get();
         this.actions.login({email, password}).then(data => {
             if (data.user) {
                 router.locator.redirect('/');
             }
         });
-
-        e.preventDefault();
     }
 }))
