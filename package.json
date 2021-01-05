@@ -22,7 +22,7 @@
     "san-router": "^1.2.2",
     "san-update": "2.1.0",
     "san-store": "^2.0.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "marked": "^0.6.2",
     "date-fns": "^1.30.1"
   },
