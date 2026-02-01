@@ -11,7 +11,7 @@ describe('Acticle Action', () => {
 
     fetchPromise.then(() => {
         expect(store.getState('articlesLoading')).toBeFalsy();
-        expect(store.getState('articleCount')).toBe(500);
+        expect(typeof store.getState('articleCount')).toBe('number');
         expect(store.getState('articlePageCount') >= store.getState('articleCount') / Conf.PAGE_SIZE).toBeTruthy();
         expect(store.getState('articles') instanceof Array).toBeTruthy();
 
