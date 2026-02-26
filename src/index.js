@@ -1,3 +1,5 @@
+import './index.css';
+
 import Header from './common/components/header';
 import Footer from './common/components/footer';
 import Login from './user/login';
