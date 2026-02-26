@@ -4,15 +4,14 @@ import { connect } from 'san-store';
 import { Types } from './action';
 import ErrorsView from '../common/components/errors';
 
-export default connect.san(
-    {
-        isAuthenticated: 'isAuthenticated',
-        user: 'user'
-    },
-    {
-        register: Types.REGISTER
-    }
+export default connect(
+    {},
+    { login: Types.LOGIN }
 )(san.defineComponent({
+    initData(): { email?: string; password?: string } {
+        return {};
+    },
+
     components: {
         'x-errors': ErrorsView
     },
@@ -22,22 +21,19 @@ export default connect.san(
           <div class="container page">
             <div class="row">
               <div class="col-md-6 offset-md-3 col-xs-12">
-                <h1 class="text-xs-center">Sign up</h1>
+                <h1 class="text-xs-center">Sign in</h1>
                 <p class="text-xs-center">
-                  <a href="#/login">Have an account?</a>
+                  <a href="#/register">Need an account?</a>
                 </p>
                 <x-errors />
                 <form on-submit="prevent:onSubmit">
-                  <fieldset class="form-group">
-                    <input class="form-control form-control-lg" type="text" value="{=username=}" placeholder="Username">
-                  </fieldset>
                   <fieldset class="form-group">
                     <input class="form-control form-control-lg" type="text" value="{=email=}" placeholder="Email">
                   </fieldset>
                   <fieldset class="form-group">
                     <input class="form-control form-control-lg" type="password" value="{=password=}" placeholder="Password">
                   </fieldset>
-                  <button class="btn btn-lg btn-primary pull-xs-right">Sign up</button>
+                  <button class="btn btn-lg btn-primary pull-xs-right">Sign in</button>
                 </form>
               </div>
             </div>
@@ -45,12 +41,12 @@ export default connect.san(
         </div>
     `,
 
-    onSubmit() {
-        let {username, email, password} = this.data.get();
-        this.actions.register({username, email, password}).then(data => {
+    onSubmit(): void {
+        let {email, password} = this.data.get() as { email?: string; password?: string };
+        this.actions.login({email: email || '', password: password || ''}).then((data: any) => {
             if (data.user) {
                 router.locator.redirect('/');
             }
         });
     }
-}))
+}));

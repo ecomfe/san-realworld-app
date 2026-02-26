@@ -9,4 +9,4 @@ export default san.defineComponent({
         </span>
       </div>
     `
-})
+});

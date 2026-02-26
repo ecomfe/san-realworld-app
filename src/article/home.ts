@@ -4,7 +4,7 @@ import { Link } from 'san-router';
 import { Types as ActionTypes } from './action';
 import ArticleList from './components/list';
 
-export default connect.san(
+export default connect(
     {
         tags: 'tags',
         isAuthenticated: 'isAuthenticated'
@@ -66,7 +66,7 @@ export default connect.san(
       </div>
     `,
 
-    attached() {
+    attached(): void {
         this.actions.tags();
     }
-}))
+}));

@@ -2,6 +2,10 @@ import san from 'san';
 import { Link } from 'san-router';
 
 export default san.defineComponent({
+    initData(): { username?: string } {
+        return {};
+    },
+
     components: {
         'x-link': Link
     },
@@ -18,4 +22,4 @@ export default san.defineComponent({
         </ul>
       </div>
     `
-})
+});

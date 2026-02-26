@@ -1,7 +1,7 @@
 import san from 'san';
 import { connect } from 'san-store';
 
-export default connect.san(
+export default connect(
     {
         errors: 'errors'
     }
@@ -11,4 +11,4 @@ export default connect.san(
         <li s-for="v in errors">{{ v }}</li>
       </ul>
     `
-}))
+}));

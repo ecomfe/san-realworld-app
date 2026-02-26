@@ -3,8 +3,9 @@ import { router } from 'san-router';
 import { connect } from 'san-store';
 import { Types as ActionTypes } from './action';
 import ErrorsView from '../common/components/errors';
+import { Article } from '../types';
 
-export default connect.san(
+export default connect(
     {
         article: 'article',
         isAuthenticated: 'isAuthenticated'
@@ -18,6 +19,10 @@ export default connect.san(
         removeTag: ActionTypes.REMOVE_TAG
     }
 )(san.defineComponent({
+    initData(): { tagInput?: string; inProgress?: boolean } {
+        return {};
+    },
+
     components: {
         'x-errors': ErrorsView
     },
@@ -62,7 +67,7 @@ export default connect.san(
         </div>
     `,
 
-    route() {
+    route(): void {
         let slug = this.data.get('route.query.slug');
 
         if (slug) {
@@ -73,18 +78,18 @@ export default connect.san(
         }
     },
 
-    disposed() {
+    disposed(): void {
         this.actions.reset();
     },
 
-    onPublish() {
+    onPublish(): void {
         this.data.set('inProgress', true);
 
         let slug = this.data.get('route.query.slug');
-        this.actions[slug ? 'edit' : 'add'](this.data.get('article'))
-            .then(data => {
+        this.actions[slug ? 'edit' : 'add'](this.data.get('article') as Article)
+            .then((data: any) => {
                 if (data.errors) {
-                    this.data.set('inProgress', null);
+                    this.data.set('inProgress', false);
                     return;
                 }
 
@@ -92,7 +97,7 @@ export default connect.san(
             });
     },
 
-    addTag(e) {
+    addTag(e: KeyboardEvent): void {
         if ((e.which || e.keyCode) === 13) {
             e.preventDefault();
             let tagInput = this.data.get('tagInput');
@@ -105,7 +110,7 @@ export default connect.san(
         }
     },
 
-    removeTag(tag) {
+    removeTag(tag: string): void {
         this.actions.removeTag(tag);
     }
-}))
+}));

@@ -2,7 +2,7 @@ import san from 'san';
 import { Link } from 'san-router';
 import { connect } from 'san-store';
 
-export default connect.san(
+export default connect(
     {
         isAuthenticated: 'isAuthenticated',
         user: 'user'
@@ -54,4 +54,4 @@ export default connect.san(
         </ul>
       </div>
     `
-}))
+}));

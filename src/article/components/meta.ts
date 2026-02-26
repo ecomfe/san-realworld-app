@@ -4,10 +4,11 @@ import {default as format} from "date-fns/format";
 import { connect } from 'san-store';
 import { Types as ActionTypes } from '../action';
 import { Types as ProfileActionTypes } from '../../profile/action';
+import { Article, User } from '../../types';
 
 
 
-export default connect.san(
+export default connect(
     {
         profile: 'profile',
         user: 'user',
@@ -22,8 +23,12 @@ export default connect.san(
         follow: ProfileActionTypes.FOLLOW
     }
 )(san.defineComponent({
+    initData(): { article?: Article; actions?: boolean } {
+        return {};
+    },
+
     filters: {
-        date(source) {
+        date(source: string): string {
             return format(new Date(source), "MMMM D, YYYY");
         }
     },
@@ -72,7 +77,7 @@ export default connect.san(
       </div>
     `,
 
-    toggleFavorite() {
+    toggleFavorite(): void {
         if (!this.data.get('isAuthenticated')) {
             router.locator.redirect('/login');
             return;
@@ -82,7 +87,7 @@ export default connect.san(
         this.actions[favorited ? 'removeFav' : 'addFav'](this.data.get('article.slug'));
     },
 
-    toggleFollow() {
+    toggleFollow(): void {
         if (!this.data.get('isAuthenticated')) {
             router.locator.redirect('/login');
             return;
@@ -90,15 +95,15 @@ export default connect.san(
 
         let author = this.data.get('article.author');
         this.actions[author.following ? 'unfollow' : 'follow'](author.username)
-            .then(data => {
+            .then((data: any) => {
                 this.actions.setAuthor(data.profile);
                 console.log(data.profile)
             });
     },
 
-    deleteArticle() {
+    deleteArticle(): void {
         this.actions.removeArticle(this.data.get('article.slug')).then(() => {
             router.locator.redirect('/');
         });
     }
-}))
+}));

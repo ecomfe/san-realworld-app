@@ -1,16 +1,21 @@
 import san from 'san';
 import { connect } from 'san-store';
 import { Types as ActionTypes } from '../action';
+import { Profile } from '../../types';
 
 
 
-export default connect.san(
+export default connect(
     {},
     {
         unfollow: ActionTypes.UNFOLLOW,
         follow: ActionTypes.FOLLOW
     }
 )(san.defineComponent({
+    initData(): { profile?: Profile; isSelf?: boolean } {
+        return {};
+    },
+
     template: `
       <div class="user-info">
         <div class="container">
@@ -40,11 +45,11 @@ export default connect.san(
       </div>
     `,
 
-    unfollow() {
+    unfollow(): void {
         this.actions.unfollow(this.data.get('profile.username'));
     },
 
-    follow() {
+    follow(): void {
         this.actions.follow(this.data.get('profile.username'));
     }
-}))
+}));

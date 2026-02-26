@@ -2,10 +2,11 @@ import san from 'san';
 import { connect } from 'san-store';
 import ArticleMeta from './meta';
 import { Types as ActionTypes } from '../action';
+import { Article } from '../../types';
 
 
 
-export default connect.san(
+export default connect(
     {
         articles: 'articles',
         pageCount: 'articlePageCount',
@@ -17,6 +18,12 @@ export default connect.san(
 )(san.defineComponent({
     components: {
         'x-meta': ArticleMeta
+    },
+
+    initData(): { currentPage: number; feed?: boolean; tag?: string; author?: string; favorited?: string } {
+        return {
+            currentPage: 0
+        };
     },
 
     template: `
@@ -54,7 +61,7 @@ export default connect.san(
     `,
 
     computed: {
-        pages() {
+        pages(): number[] {
             let pageCount = this.data.get('pageCount');
 
             if (pageCount) {
@@ -70,7 +77,7 @@ export default connect.san(
         }
     },
 
-    attached() {
+    attached(): void {
         this.change = () => {
             this.updateFromOwner = true;
         };
@@ -81,7 +88,7 @@ export default connect.san(
         this.fetch(0);
     },
 
-    fetch(page) {
+    fetch(page: number): void {
         let {favorited, author, tag, feed} = this.data.get();
         this.data.set('currentPage', page);
 
@@ -94,14 +101,14 @@ export default connect.san(
         });
     },
 
-    changePage(page) {
+    changePage(page: number): void {
         this.fetch(page);
     },
 
-    updated() {
+    updated(): void {
         if (this.updateFromOwner) {
             this.updateFromOwner = false;
             this.fetch(0);
         }
     }
-}))
+}));

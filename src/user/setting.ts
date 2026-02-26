@@ -3,8 +3,9 @@ import { router } from 'san-router';
 import { connect } from 'san-store';
 import { Types } from './action';
 import ErrorsView from '../common/components/errors';
+import { User } from '../types';
 
-export default connect.san(
+export default connect(
     {
         isAuthenticated: 'isAuthenticated',
         user: 'user'
@@ -54,15 +55,15 @@ export default connect.san(
         </div>
     `,
 
-    updateSettings(e) {
+    updateSettings(e: Event): void {
         this.data.set('inProgress', true);
-        this.actions.updateUser(this.data.get('user')).then(() => {
+        this.actions.updateUser(this.data.get('user') as User).then(() => {
             this.data.set('inProgress', null);
         });
     },
 
-    logout() {
+    logout(): void {
         this.actions.logout();
         router.locator.redirect('/');
     }
-}))
+}));

@@ -1,14 +1,15 @@
 import san from 'san';
-import marked from "marked";
+import { marked } from "marked";
 import { connect } from 'san-store';
 import { Types as ActionTypes } from './action';
 import CommentEditor from './components/comment-editor';
 import ArticleMeta from './components/meta';
+import { Article, Comment, User } from '../types';
 
 
-export default connect.san(
+export default connect(
     {
-        comments: 'comments', 
+        comments: 'comments',
         article: 'article',
         isAuthenticated: 'isAuthenticated',
         user: 'user'
@@ -25,19 +26,23 @@ export default connect.san(
         'x-comment-editor': CommentEditor
     },
 
+    initData(): { comments?: Comment[]; article?: Article } {
+        return {};
+    },
+
     filters: {
-        marked(source) {
+        marked(source: string): string {
             return marked(source || '');
         }
     },
 
-    route() {
+    route(): void {
         let slug = this.data.get('route.query.slug');
         this.actions.get(slug);
         this.actions.getComments(slug);
     },
 
-    disposed() {
+    disposed(): void {
         this.actions.reset();
     },
 
@@ -99,7 +104,7 @@ export default connect.san(
       </div>
     `,
 
-    removeComment(slug, commentId) {
-        this.actions.removeComment({slug, commentId})
+    removeComment(slug: string, commentId: number): void {
+        this.actions.removeComment({slug, commentId});
     }
-}))
+}));

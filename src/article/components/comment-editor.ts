@@ -4,12 +4,16 @@ import { Types as ActionTypes } from '../action';
 import ErrorsView from '../../common/components/errors';
 
 
-export default connect.san(
+export default connect(
     {},
     {
         submit: ActionTypes.ADD_COMMENT
     }
 )(san.defineComponent({
+    initData(): { slug?: string; comment?: string; inProgress?: boolean; userImage?: string } {
+        return {};
+    },
+
     components: {
         'x-errors': ErrorsView
     },
@@ -30,7 +34,7 @@ export default connect.san(
       </div>
     `,
 
-    postComment() {
+    postComment(): void {
         let {slug, comment} = this.data.get();
 
         if (slug && comment) {
@@ -39,7 +43,7 @@ export default connect.san(
                 this.data.set('comment', '');
                 this.data.set('inProgress', false);
             });
-            
+
         }
     }
-}))
+}));
